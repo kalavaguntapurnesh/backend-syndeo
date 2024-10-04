@@ -319,7 +319,6 @@ exports.updateProfile = async (req, res) => {
       },
       req.body
     );
-    console.log(user);
     return res.status(200).json({ message: "Profile Updated Successfully!" });
   } catch (error) {
     return res.status(500).json({ error: "Internal Server Error" });
@@ -330,7 +329,6 @@ exports.makeIndividualEvents = async (req, res) => {
   try {
     const { userId, title, description, location, date, startTime, endTime } =
       req.body;
-    console.log(req.body);
     const newIndividualEvent = new individualScheduleModel({
       userId,
       title,
@@ -341,7 +339,6 @@ exports.makeIndividualEvents = async (req, res) => {
       endTime,
     });
     await newIndividualEvent.save();
-    console.log("Event Creation Successful");
     return res.status(200).json(newIndividualEvent);
   } catch (error) {
     console.log(error);
@@ -372,7 +369,6 @@ exports.getIndividualSchedules = async (req, res) => {
     if (!individualSchedules) {
       return res.status(404).json({ message: "User Not Found" });
     } else {
-      console.log("Individual Schedules are ", individualSchedules);
       return res.status(200).json({ data: individualSchedules });
     }
   } catch (error) {
@@ -613,7 +609,6 @@ exports.addEmployees = async (req, res, next) => {
       adminId,
       employeeId,
     } = req.body;
-    console.log("The adminId is: ", adminId);
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new userModel({
       firstName,
@@ -627,15 +622,9 @@ exports.addEmployees = async (req, res, next) => {
     const organization = await organizationModel.findOne({
       organizationAdminId: adminId,
     });
-    console.log("The organization is : ", organization);
-
     if (!organization) {
       return res.status(404).json({ message: "Organization Not Found" });
     }
-    console.log(
-      "The name of the organization is : ",
-      organization?.organizationName
-    );
     const employee = new organizerModel({
       userId: user._id,
       organizationName: organization?.organizationName,
@@ -653,7 +642,6 @@ exports.addEmployees = async (req, res, next) => {
 exports.getOrganizationEmployees = async (req, res, next) => {
   try {
     const { adminId } = req.body;
-    console.log("The admin ID is :", adminId);
     const employees = await organizerModel
       .find({
         organizationAdminId: adminId,
