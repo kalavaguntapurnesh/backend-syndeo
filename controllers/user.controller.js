@@ -285,6 +285,160 @@ exports.registerUser = async (req, res, next) => {
   }
 };
 
+exports.makeIndividualEvents = async (req, res) => {
+  try {
+    const {
+      userId,
+      title,
+      description,
+      location,
+      date,
+      startTime,
+      endTime,
+      emails,
+    } = req.body;
+    const newIndividualEvent = new individualScheduleModel({
+      userId,
+      title,
+      description,
+      location,
+      date,
+      startTime,
+      endTime,
+      emails,
+    });
+    await newIndividualEvent.save();
+    const transporter = nodemailer.createTransport({
+      host: "mail.clouddatanetworks.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: "syndrome-noreply@clouddatanetworks.com",
+        pass: "CDN@Syndeo@",
+      },
+    });
+    var mailOptions = {
+      from: "syndrome-noreply@clouddatanetworks.com",
+      to: emails.join(","),
+      subject: "You got an invitation for an upcoming event",
+      html: `<!DOCTYPE html>
+    <html>
+      <head>
+        <style>
+        body {
+          font-family: Arial, sans-serif;
+          height: 100%;
+          width: 100%;
+        }
+  
+        .container {
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: #fff;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    
+          .header {
+            text-align: center;
+            margin-bottom: 20px;
+          }
+    
+          .header h1 {
+            color: #333;
+            font-size: 22px;
+            font-weight: 600;
+            text-align: center;
+          }
+    
+          .content {
+            margin-bottom: 30px;
+          }
+    
+          .content p {
+            margin: 0 0 10px;
+            line-height: 1.5;
+          }
+    
+          .content #para p {
+            margin-top: 20px;
+          }
+    
+          .content .button {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+          }
+    
+          .content .button a {
+            border-radius: 40px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            padding-left: 100px;
+            padding-right: 100px;
+            background-color: #007ae1;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+          }
+    
+          /* .footer {
+            text-align: center;
+          } */
+    
+          .footer p {
+            color: #999;
+            font-size: 14px;
+            margin: 0;
+            margin-top: 8px;
+            margin-bottom: 8px;
+          }
+        </style>
+      </head>
+       <body>
+          <div class="container">
+            <div class="header">
+              <h1>The details of the event are as follows:</h1>
+            </div>
+            <div class="content">
+              <p id="para">Hello, you are invited for <span style="font-weight: bold">${title}!</span></p>
+              <p>
+                The location is <span style="font-weight: bold">${location}</span> on the date of <span style="font-weight: bold">${date}</span> and the event starts at ${startTime}</span> and ends at ${endTime}</span>.
+              </p>
+              <p>
+               The description of the event is <span style="font-weight: bold">${description}</span>. This emails indicates that the user cares very much for you.
+              </p>
+              <div class="button">
+                <a href="">Add to Calendar</a>
+              </div>
+            </div>
+            <div class="footer">
+              <p>Best regards,</p>
+              <p>Team Syndèo</p>
+            </div>
+          </div>
+        </body>
+    </html>
+      `,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        return res.status(500).json({ error: "Error in sending mail" });
+      } else {
+        console.log("This is for the testing purposes");
+        return res.status(200).json(newIndividualEvent);
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -321,27 +475,6 @@ exports.updateProfile = async (req, res) => {
     );
     return res.status(200).json({ message: "Profile Updated Successfully!" });
   } catch (error) {
-    return res.status(500).json({ error: "Internal Server Error" });
-  }
-};
-
-exports.makeIndividualEvents = async (req, res) => {
-  try {
-    const { userId, title, description, location, date, startTime, endTime } =
-      req.body;
-    const newIndividualEvent = new individualScheduleModel({
-      userId,
-      title,
-      description,
-      location,
-      date,
-      startTime,
-      endTime,
-    });
-    await newIndividualEvent.save();
-    return res.status(200).json(newIndividualEvent);
-  } catch (error) {
-    console.log(error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };

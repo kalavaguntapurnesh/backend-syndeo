@@ -33,10 +33,9 @@ const individualScheduleSchema = new mongoose.Schema(
       type: String,
       // required: true,
     },
-    // guestsEmails: {
-    //   type: Array,
-    //   requried: true,
-    // },
+    emails: {
+      type: [String], // Array of strings
+    },
   },
   { timestamps: true }
 );
