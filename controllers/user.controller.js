@@ -601,39 +601,18 @@ exports.resetPassword = async (req, res) => {
   });
 };
 
-exports.getUsers = async (req, res, next) => {
-  try {
-    const allUsers = await userModel.find({});
-    res.status(200).json(allUsers);
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.getUserById = async (req, res, next) => {
-  try {
-    const user = await userModel.findById(req.params.userId);
-    if (user) {
-      res.status(200).json(user);
-    }
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.createUser = async (req, res, next) => {
-  try {
-    const createdUserModel = await userModel.create(req.body);
-    res.status(201).json(createdUserModel);
-  } catch (error) {
-    next(error);
-  }
-};
-
 exports.addEmployees = async (req, res, next) => {
   try {
-    const { firstName, lastName, email, password, phoneNumber, role, adminId } =
-      req.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      phoneNumber,
+      role,
+      adminId,
+      employeeId,
+    } = req.body;
     console.log("The adminId is: ", adminId);
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new userModel({
@@ -661,6 +640,7 @@ exports.addEmployees = async (req, res, next) => {
       userId: user._id,
       organizationName: organization?.organizationName,
       organizationAdminId: adminId,
+      employeeId: employeeId,
     });
     await employee.save();
     return res.status(201).json(employee);
@@ -674,11 +654,19 @@ exports.getOrganizationEmployees = async (req, res, next) => {
   try {
     const { adminId } = req.body;
     console.log("The admin ID is :", adminId);
-    const employees = await organizerModel.find({
-      organizationAdminId: adminId,
-    });
-    console.log("The Employees are: ", employees);
-    return res.status(200).json({ data: employees });
+    const employees = await organizerModel
+      .find({
+        organizationAdminId: adminId,
+      })
+      .populate("userId", "firstName lastName email");
+    const result = employees.map((employee) => ({
+      firstName: employee.userId.firstName,
+      lastName: employee.userId.lastName,
+      email: employee.userId.email,
+      employeeId: employee.employeeId,
+    }));
+
+    return res.status(200).json(result);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
