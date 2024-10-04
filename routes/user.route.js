@@ -17,6 +17,6 @@ router.post(
   "/getOrganizationEmployees",
   userController.getOrganizationEmployees
 );
-router.post("/getUserData", authMiddleware, userController.getUserData);
+router.post("/getUserData", userController.getUserData);
 
 module.exports = router;
