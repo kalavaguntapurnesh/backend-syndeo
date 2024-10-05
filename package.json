@@ -2,10 +2,9 @@
   "name": "backend-syndeo",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "jest --watchAll",
-    "start": "nodemon server.js"
+    "test": "jest --watchAll"
   },
   "keywords": [],
   "author": "",

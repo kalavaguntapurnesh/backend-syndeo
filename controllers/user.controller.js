@@ -11,7 +11,7 @@ const sendMail = require("../helpers/sendMail.js");
 const organizationModel = require("../models/organization.model.js");
 const organizerModel = require("../models/organizer.model.js");
 
-exports.registerUser = async (req, res, next) => {
+exports.registerUser = async (req, res) => {
   try {
     const {
       firstName,
@@ -479,7 +479,7 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
-exports.getUserData = async (req, res, next) => {
+exports.getUserData = async (req, res) => {
   try {
     const user = await userModel.findById({ _id: req.body.userId });
     user.password = undefined;
@@ -730,7 +730,7 @@ exports.resetPassword = async (req, res) => {
   });
 };
 
-exports.addEmployees = async (req, res, next) => {
+exports.addEmployees = async (req, res) => {
   try {
     const {
       firstName,
@@ -772,7 +772,7 @@ exports.addEmployees = async (req, res, next) => {
   }
 };
 
-exports.getOrganizationEmployees = async (req, res, next) => {
+exports.getOrganizationEmployees = async (req, res) => {
   try {
     const { adminId } = req.body;
     const employees = await organizerModel
