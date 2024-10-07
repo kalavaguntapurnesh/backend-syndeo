@@ -183,8 +183,8 @@ exports.registerUser = async (req, res) => {
     // );
     var mailOptions = {
       from: "syndrome-noreply@clouddatanetworks.com",
-      to: "kalavaguntapurnesh@gmail.com",
-      subject: "A user has raised a doubt through enquiry form",
+      to: email,
+      subject: "Welcome to Syndèo!!! 🎉 🎉. Thank you for registering with us",
       html: `<!DOCTYPE html>
     <html>
       <head>
