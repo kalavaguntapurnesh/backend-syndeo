@@ -264,32 +264,32 @@ exports.registerUser = async (req, res) => {
         </style>
       </head>
         <body>
-    //       <div class="container">
-    //         <div class="header">
-    //           <h1>Verify your email address to complete registration</h1>
-    //         </div>
-    //         <div class="content">
-    //           <p id="para">Greetings, <span style="font-weight: bold">${firstName} ${lastName}!</span></p>
-    //           <p>
-    //             Thank you for your interest in joining Syndèo! To complete your
-    //             registration, we need you to verify your email address.
-    //           </p>
-    //           <p>
-    //             As part of our ongoing efforts to promote trust and protect your
-    //             security, we now require you to obtain an Identity Verification which
-    //             is done by verifying your email.
-    //           </p>
-    //           <div class="button">
-    //             <a>Verify Email</a>
-    //           </div>
-    //         </div>
-    //         <p>Thanks for helping to keep Syndèo secure!</p>
-    //         <div class="footer">
-    //           <p>Best regards,</p>
-    //           <p>Team Syndèo</p>
-    //         </div>
-    //       </div>
-    //     </body>
+          <div class="container">
+            <div class="header">
+              <h1>Verify your email address to complete registration</h1>
+            </div>
+            <div class="content">
+              <p id="para">Greetings, <span style="font-weight: bold">${firstName} ${lastName}!</span></p>
+              <p>
+                Thank you for your interest in joining Syndèo! To complete your
+                registration, we need you to verify your email address.
+              </p>
+              <p>
+                As part of our ongoing efforts to promote trust and protect your
+                security, we now require you to obtain an Identity Verification which
+                is done by verifying your email.
+              </p>
+              <div class="button">
+                <a>Verify Email</a>
+              </div>
+            </div>
+            <p>Thanks for helping to keep Syndèo secure!</p>
+            <div class="footer">
+              <p>Best regards,</p>
+              <p>Team Syndèo</p>
+            </div>
+          </div>
+        </body>
     </html>
       `,
     };
