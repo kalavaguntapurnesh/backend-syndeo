@@ -526,7 +526,8 @@ exports.getIndividualSchedules = async (req, res) => {
     if (!individualSchedules) {
       return res.status(404).json({ message: "User Not Found" });
     } else {
-      return res.status(200).json({ data: individualSchedules });
+      // return res.status(200).json({ data: individualSchedules });
+      return res.status(200).json(individualSchedules);
     }
   } catch (error) {
     console.log(error);
