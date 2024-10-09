@@ -49,7 +49,7 @@ exports.registerUser = async (req, res) => {
       token: crypto.randomBytes(16).toString("hex"),
     });
     await token.save();
-    const link = `http://localhost:8080/confirm/${token.token}`;
+    const link = `https://backend-syndeo.onrender.com/api/v1/confirm/${token.token}`;
     if (role === "organization") {
       const organization = new organizationModel({
         organizationName,
