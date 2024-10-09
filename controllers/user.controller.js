@@ -593,98 +593,93 @@ exports.forgotPassword = async (req, res) => {
       port: 465,
       secure: true,
       auth: {
-        user: "noreply-syndeo@clouddatanetworks.com",
-        pass: "CDN@syndeo",
+        user: "syndrome-noreply@clouddatanetworks.com",
+        pass: "CDN@Syndeo@",
       },
     });
     var mailOptions = {
-      from: "noreply-syndeo@clouddatanetworks.com",
+      from: "syndrome-noreply@clouddatanetworks.com",
       to: email,
-      subject: "Reset Your Password",
+      subject: "Welcome to Syndèo!!! 🎉 🎉. Thank you for registering with us",
       html: `<!DOCTYPE html>
-      <html>
-        <head>
-          <style>
-            body {
-              font-family: Arial, sans-serif;
-              height: 100%;
-              width: 100%;
-              background-color: #f8f9f0;
-            }
-      
-            .container {
-              max-width: 900px;
-              margin: 0 auto;
-              padding: 20px;
-              background-color: #fff;
-              border-radius: 5px;
-              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            }
-      
-            .header {
-              text-align: center;
-              margin-bottom: 20px;
-            }
-      
-            .header h1 {
-              color: #333;
-              font-size: 22px;
-              font-weight: 600;
-              text-align: center;
-            }
-      
-            .content {
-              margin-bottom: 30px;
-            }
-      
-            .content p {
-              margin: 0 0 10px;
-              line-height: 1.5;
-              text-align: center;
-            }
-      
-            .button {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              margin-top: 20px;
-              margin-bottom: 20px;
-            }
-      
-            .button a {
-              border-radius: 40px;
-              cursor: pointer;
-              padding-top: 16px;
-              padding-bottom: 16px;
-              padding-left: 30px;
-              padding-right: 30px;
-              background-color: #007ae1;
-              text-decoration: none;
-              color: white;
-              font-weight: 600;
-              text-align: center;
-            }
-      
-            .bottom p {
-              text-align: center;
-            }
-      
-            .footer p {
-              color: #999;
-              font-size: 14px;
-              margin: 0;
-              margin-top: 8px;
-              margin-bottom: 8px;
-            }
-            .footer .footerOne {
-              text-align: center;
-            }
-            .footer .footerTwo {
-              text-align: center;
-            }
-          </style>
-        </head>
-        <body>
+    <html>
+      <head>
+        <style>
+        body {
+          font-family: Arial, sans-serif;
+          height: 100%;
+          width: 100%;
+        }
+  
+        .container {
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: #fff;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    
+          .header {
+            text-align: center;
+            margin-bottom: 20px;
+          }
+    
+          .header h1 {
+            color: #333;
+            font-size: 22px;
+            font-weight: 600;
+            text-align: center;
+          }
+    
+          .content {
+            margin-bottom: 30px;
+          }
+    
+          .content p {
+            margin: 0 0 10px;
+            line-height: 1.5;
+          }
+    
+          .content #para p {
+            margin-top: 20px;
+          }
+    
+          .content .button {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+          }
+    
+          .content .button a {
+            border-radius: 40px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            padding-left: 100px;
+            padding-right: 100px;
+            background-color: #007ae1;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+          }
+    
+          /* .footer {
+            text-align: center;
+          } */
+    
+          .footer p {
+            color: #999;
+            font-size: 14px;
+            margin: 0;
+            margin-top: 8px;
+            margin-bottom: 8px;
+          }
+        </style>
+      </head>
+           <body>
           <div class="container">
             <div class="header">
               <h1>Reset your password</h1>
@@ -694,7 +689,7 @@ exports.forgotPassword = async (req, res) => {
               <p>If it wasn't done by you, please contact us immediately.</p>
             </div>
             <div class="button">
-              <a href="https://syndeo-frontend.vercel.app/resetPassword/${user._id}/${token}"
+              <a href="https://syndeo-frontendtwo.vercel.app/resetPassword/${user._id}/${token}"
                 >Reset the password</a
               >
             </div>
@@ -707,24 +702,20 @@ exports.forgotPassword = async (req, res) => {
             </div>
           </div>
         </body>
-      </html>
-      
-      
+    </html>
       `,
     };
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        return res.json({ message: "Error in sending Mail" });
+        return res.json({ status: false, message: "Error in sending mail" });
       } else {
-        res
-          .status(200)
-          .json({ message: "Check your email once", status: true });
+        console.log("This is for the testing purposes");
+        return res.status(200).json({ message: "Check your mail once" });
       }
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Some Error Arised", error: error.message });
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -742,13 +733,11 @@ exports.resetPassword = async (req, res) => {
         userModel
           .findByIdAndUpdate({ _id: id }, { password: hash })
           .then((u) => {
-            res.json({
-              status: true,
-              message: "Password Updated Succcessfully",
-            });
+            return res.status(200).json({ message: "Check your mail once" });
           })
           .catch((err) => {
-            res.json({ message: "Password Updation Failed" });
+            console.log(error);
+            res.status(500).json({ error: "Internal Server Error" });
           });
       });
     }
