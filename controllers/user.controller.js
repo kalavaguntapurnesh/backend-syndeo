@@ -709,8 +709,9 @@ exports.forgotPassword = async (req, res) => {
       if (error) {
         return res.json({ status: false, message: "Error in sending mail" });
       } else {
-        console.log("This is for the testing purposes");
-        return res.status(200).json({ message: "Check your mail once" });
+        return res
+          .status(200)
+          .json({ status: true, message: "Check your mail once", email });
       }
     });
   } catch (error) {
