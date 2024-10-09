@@ -470,7 +470,7 @@ exports.loginUser = async (req, res) => {
       return res.status(400).json({ error: "Required fields missing" });
     }
     const user = await userModel.findOne({ email });
-    if (user) {
+    if (user && user.verified) {
       const validPassword = await bcrypt.compare(password, user.password);
       if (!validPassword) {
         return res.status(401).json({ message: "Invalid credentials" });
