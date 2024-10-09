@@ -280,7 +280,7 @@ exports.registerUser = async (req, res) => {
                 is done by verifying your email.
               </p>
               <div class="button">
-                <a>Verify Email</a>
+                 <a href="${link}">Verify Email</a>
               </div>
             </div>
             <p>Thanks for helping to keep Syndèo secure!</p>
@@ -818,3 +818,31 @@ exports.getOrganizationEmployees = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+// exports.searchOrganizationEmployees = async (req, res) => {
+//   try {
+//     const { adminId } = req.body;
+//     const { searchQuery } = req.body;
+//     const employees = await organizerModel
+//       .find({
+//         organizationAdminId: adminId,
+//       })
+//       .populate("userId", "firstName lastName email")
+//       .lean();
+//     console.log("Initial employees are : ", employees);
+//     const filteredEmployees = employees.filter((emp) => {
+//       const { firstName, lastName, email } = emp.userId;
+//       const query = searchQuery.toLowerCase();
+//       return (
+//         firstName.toLowerCase().includes(query) ||
+//         lastName.toLowerCase().includes(query) ||
+//         email.toLowerCase().includes(query)
+//       );
+//     });
+//     console.log("Filtered Employees are : ", filteredEmployees);
+//     return res.status(200).json(filteredEmployees);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
