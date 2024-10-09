@@ -19,4 +19,9 @@ router.post(
 );
 router.post("/getUserData", authMiddleware, userController.getUserData);
 
+// router.post(
+//   "/searchOrganizationEmployees",
+//   userController.searchOrganizationEmployees
+// );
+
 module.exports = router;
