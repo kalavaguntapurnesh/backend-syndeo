@@ -18,7 +18,7 @@ router.post(
   userController.getOrganizationEmployees
 );
 router.post("/getUserData", authMiddleware, userController.getUserData);
-router.get('/verify-email/:token', userController.confirmToken);
+// router.get('/verify-email/:token', userController.confirmToken);
 
 // router.post(
 //   "/searchOrganizationEmployees",
