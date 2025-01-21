@@ -51,7 +51,7 @@ exports.registerUser = async (req, res) => {
     });
     await token.save();
     const link = `https://backend-syndeo.onrender.com/api/v1/confirm/${token.token}`;
-    const verifyLink = `https://backend-syndeo.onrender.com/api/v1/verify-email/${token.token}`;
+    const verifyLink = `https://syndeo-frontendtwo.vercel.app/verify-email/${token.token}`;
     if (role === "organization") {
       const organization = new organizationModel({
         organizationName,
