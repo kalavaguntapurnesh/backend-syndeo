@@ -10,6 +10,7 @@ const ApiError = require("../utils/ApiError.js");
 const sendMail = require("../helpers/sendMail.js");
 const organizationModel = require("../models/organization.model.js");
 const organizerModel = require("../models/organizer.model.js");
+const Swal =  require("sweetalert2");
 
 exports.registerUser = async (req, res) => {
   try {
@@ -50,6 +51,7 @@ exports.registerUser = async (req, res) => {
     });
     await token.save();
     const link = `https://backend-syndeo.onrender.com/api/v1/confirm/${token.token}`;
+    const verifyLink = `https://backend-syndeo.onrender.com/api/v1/verify-email/${token.token}`;
     if (role === "organization") {
       const organization = new organizationModel({
         organizationName,
@@ -61,12 +63,13 @@ exports.registerUser = async (req, res) => {
       await organization.save();
     }
     const transporter = nodemailer.createTransport({
-      host: "mail.clouddatanetworks.com",
-      port: 465,
-      secure: true,
+      name: "hostgator",
+      host: "gator3008.hostgator.com",
+      port: 587,
+      // secure: true,
       auth: {
-        user: "syndrome-noreply@clouddatanetworks.com",
-        pass: "CDN@Syndeo@",
+        user: "noreply-syndeo@clouddatanetworks.com",
+        pass: "CDN@syndeo",
       },
     });
     // await sendMail.sendMailToUser(
@@ -182,7 +185,7 @@ exports.registerUser = async (req, res) => {
     //   `
     // );
     var mailOptions = {
-      from: "syndrome-noreply@clouddatanetworks.com",
+      from: "noreply-syndeo@clouddatanetworks.com",
       to: email,
       subject: "Welcome to Syndèo!!! 🎉 🎉. Thank you for registering with us",
       html: `<!DOCTYPE html>
@@ -280,7 +283,7 @@ exports.registerUser = async (req, res) => {
                 is done by verifying your email.
               </p>
               <div class="button">
-                 <a href="${link}">Verify Email</a>
+                 <a href="${verifyLink}">Verify Email</a>
               </div>
             </div>
             <p>Thanks for helping to keep Syndèo secure!</p>
@@ -572,6 +575,23 @@ exports.confirmToken = async (req, res) => {
     await tokenModel.findByIdAndDelete(token._id);
     await user.save();
     res.status(200).json({ message: "Email Verified Successfully" });
+
+    // res.status(200).json({
+    //   message: "Email Verified Successfully",
+    //   action: "Please login now",
+    //   loginUrl: "https://backend-syndeo.onrender.com/api/v1/login"  // Replace with your actual login URL
+    // });
+
+    // if(res.status === 200)
+    // {
+    //   Swal.fire({
+    //     icon: 'success',
+    //     title: data.message,  // "Email Verified Successfully"
+    //     html: `Please <a href="https://backend-syndeo.onrender.com/api/v1/login" target="_blank">login here</a>`,  // Login URL
+    //     showConfirmButton: true,
+    //     confirmButtonText: 'Close',
+    //   });
+    // }
   } catch (error) {
     res.status(401).json({ message: "Unauthorized", error: error.message });
   }
