@@ -1,7 +1,7 @@
 const express = require("express");
 const userController = require("../controllers/user.controller.js");
 const authMiddleware = require("../middlewares/auth.middleware.js");
-
+const confirmToken = require("../models/token.model.js")
 const router = express.Router();
 
 router.post("/registerUser", userController.registerUser);
@@ -18,6 +18,7 @@ router.post(
   userController.getOrganizationEmployees
 );
 router.post("/getUserData", authMiddleware, userController.getUserData);
+router.get('/verify-email/:token', confirmToken);
 
 // router.post(
 //   "/searchOrganizationEmployees",
