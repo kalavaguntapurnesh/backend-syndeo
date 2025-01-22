@@ -10,7 +10,7 @@ const ApiError = require("../utils/ApiError.js");
 const sendMail = require("../helpers/sendMail.js");
 const organizationModel = require("../models/organization.model.js");
 const organizerModel = require("../models/organizer.model.js");
-const Swal =  require("sweetalert2");
+const Swal = require("sweetalert2");
 
 exports.registerUser = async (req, res) => {
   try {
@@ -72,7 +72,7 @@ exports.registerUser = async (req, res) => {
         pass: "CDN@syndeo",
       },
     });
-  
+
     var mailOptions = {
       from: "noreply-syndeo@clouddatanetworks.com",
       to: email,
@@ -225,16 +225,17 @@ exports.makeIndividualEvents = async (req, res) => {
     });
     await newIndividualEvent.save();
     const transporter = nodemailer.createTransport({
-      host: "mail.clouddatanetworks.com",
-      port: 465,
-      secure: true,
+      name: "hostgator",
+      host: "gator3008.hostgator.com",
+      port: 587,
+      // secure: true,
       auth: {
-        user: "syndrome-noreply@clouddatanetworks.com",
-        pass: "CDN@Syndeo@",
+        user: "noreply-syndeo@clouddatanetworks.com",
+        pass: "CDN@syndeo",
       },
     });
     var mailOptions = {
-      from: "syndrome-noreply@clouddatanetworks.com",
+      from: "noreply-syndeo@clouddatanetworks.com",
       to: emails.join(","),
       subject: "You got an invitation for an upcoming event",
       html: `<!DOCTYPE html>
@@ -498,16 +499,17 @@ exports.forgotPassword = async (req, res) => {
     });
 
     const transporter = nodemailer.createTransport({
-      host: "mail.clouddatanetworks.com",
-      port: 465,
-      secure: true,
+      name: "hostgator",
+      host: "gator3008.hostgator.com",
+      port: 587,
+      // secure: true,
       auth: {
-        user: "syndrome-noreply@clouddatanetworks.com",
-        pass: "CDN@Syndeo@",
+        user: "noreply-syndeo@clouddatanetworks.com",
+        pass: "CDN@syndeo",
       },
     });
     var mailOptions = {
-      from: "syndrome-noreply@clouddatanetworks.com",
+      from: "noreply-syndeo@clouddatanetworks.com",
       to: email,
       subject: "Welcome to Syndèo!!! 🎉 🎉. Thank you for registering with us",
       html: `<!DOCTYPE html>

@@ -1,8 +1,9 @@
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  host: "mail.clouddatanetworks.com",
-  port: 465,
+  name: "hostgator",
+  host: "gator3008.hostgator.com",
+  port: 587,
   // secure: true,
   auth: {
     user: "noreply-syndeo@clouddatanetworks.com",
